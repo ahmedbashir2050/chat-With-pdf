@@ -70,6 +70,52 @@ Instead of sending the entire document directly to an AI model, the system:
 * Arabic and English support
 * Interactive PDF page references
 
+## 📱 Screenshots
+
+The Chat With PDF application provides a clean interface for uploading PDF documents, asking questions, viewing AI-generated answers, and navigating to the relevant PDF pages.
+
+### 🔐 Login
+
+<p align="center">
+  <img src="screenshots/login.png" width="280" alt="Login Screen">
+</p>
+
+### 🏠 Home
+
+<p align="center">
+  <img src="screenshots/home.png" width="280" alt="Home Screen">
+</p>
+
+### 📄 Upload PDF
+
+<p align="center">
+  <img src="screenshots/upload.png" width="280" alt="Upload PDF Screen">
+</p>
+
+### 💬 Chat With PDF
+
+<p align="center">
+  <img src="screenshots/chat.png" width="280" alt="Chat With PDF Screen">
+</p>
+
+### 📖 Drawer
+
+<p align="center">
+  <img src="screenshots/drawer.png" width="280" alt="PDF Viewer">
+</p>
+
+
+---
+
+## 📸 Application Preview
+
+<p align="center">
+  <img src="screenshots/login.png" width="180" alt="Login">
+  <img src="screenshots/home.png" width="180" alt="Home">
+  <img src="screenshots/upload.png" width="180" alt="Upload">
+  <img src="screenshots/chat.png" width="180" alt="Chat">
+</p>
+
 ---
 
 # System Architecture
