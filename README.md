@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # chat_with_pdf
 
 A new Flutter project.
