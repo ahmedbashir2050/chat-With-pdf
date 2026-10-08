@@ -1,0 +1,649 @@
+# Chat With PDF — Flutter Application
+
+This directory contains the Flutter client application for **Chat With PDF**.
+
+The application provides an interactive interface for uploading and querying PDF documents using an AI-powered Retrieval-Augmented Generation (RAG) backend.
+
+---
+
+## Overview
+
+**Chat With PDF** allows users to:
+
+* Sign in to the application
+* Create and manage chats
+* Upload PDF documents
+* Ask questions about documents
+* Receive AI-generated answers
+* View document page citations
+* Continue conversations with document context
+* Read answers in Arabic and English
+* Access document summaries and other AI-powered features
+
+The Flutter application communicates with a **FastAPI backend**, which handles document processing, retrieval, Qdrant vector search, and AI answer generation.
+
+---
+
+## Architecture
+
+```text
+Flutter Application
+        │
+        │ HTTP / REST
+        ▼
+FastAPI Backend
+        │
+        ├── Document Processing
+        ├── Query Processing
+        ├── RAG Retrieval
+        ├── Qdrant
+        └── OpenAI
+```
+
+The Flutter application is responsible primarily for:
+
+```text
+UI
+ │
+ ▼
+Controllers / State
+ │
+ ▼
+Services
+ │
+ ▼
+HTTP API
+ │
+ ▼
+FastAPI Backend
+```
+
+---
+
+## Project Structure
+
+```text
+Flutter/
+│
+├── android/
+├── ios/
+├── linux/
+├── macos/
+├── web/
+├── windows/
+│
+├── assets/
+│
+├── lib/
+│   ├── controllers/
+│   ├── screens/
+│   ├── widgets/
+│   ├── services/
+│   ├── models/
+│   ├── theme/
+│   └── main.dart
+│
+├── test/
+│
+├── pubspec.yaml
+├── analysis_options.yaml
+└── README.md
+```
+
+The exact folders may change as the application evolves.
+
+---
+
+## Technology Stack
+
+| Component             | Technology                               |
+| --------------------- | ---------------------------------------- |
+| Framework             | Flutter                                  |
+| Language              | Dart                                     |
+| State Management      | GetX                                     |
+| Authentication        | Firebase Authentication                  |
+| Backend Communication | REST API                                 |
+| Backend               | FastAPI                                  |
+| AI / RAG              | FastAPI + OpenAI + Qdrant                |
+| Database              | Backend database                         |
+| Vector Database       | Qdrant                                   |
+| Platforms             | Android, Web, Windows, Linux, macOS, iOS |
+
+---
+
+## Requirements
+
+Install:
+
+* Flutter SDK
+* Dart SDK
+* Android Studio for Android development
+* Android SDK
+* Git
+
+Verify Flutter:
+
+```powershell
+flutter doctor
+```
+
+Check the Flutter version:
+
+```powershell
+flutter --version
+```
+
+---
+
+## Install Dependencies
+
+From the Flutter directory:
+
+```powershell
+cd Flutter
+```
+
+Install packages:
+
+```powershell
+flutter pub get
+```
+
+---
+
+## Run the Application
+
+Check available devices:
+
+```powershell
+flutter devices
+```
+
+Run the application:
+
+```powershell
+flutter run
+```
+
+For a specific device:
+
+```powershell
+flutter run -d <device-id>
+```
+
+---
+
+## Backend Configuration
+
+The Flutter application communicates with the FastAPI backend through an API base URL.
+
+Configure the backend URL according to the environment.
+
+For example:
+
+```text
+Development:
+http://localhost:8000
+
+Android emulator:
+http://10.0.2.2:8000
+
+Physical Android device:
+http://YOUR_COMPUTER_IP:8000
+
+Production:
+https://YOUR-CLOUD-RUN-SERVICE.run.app
+```
+
+When testing on a physical Android phone, the phone and development computer normally need to be on the same network when using a local backend.
+
+---
+
+## Authentication
+
+The application uses authentication services to identify users.
+
+The authentication flow is:
+
+```text
+User
+ │
+ ▼
+Login Screen
+ │
+ ├── Email / Password
+ │
+ └── Google Sign-In
+ │
+ ▼
+Authentication Service
+ │
+ ▼
+Authenticated User
+ │
+ ▼
+Home Screen
+```
+
+The authentication implementation is separated from the UI through service/controller layers.
+
+---
+
+## Chat With PDF Flow
+
+The main application flow is:
+
+```text
+User
+ │
+ ▼
+Home Screen
+ │
+ ▼
+Create Chat
+ │
+ ▼
+Upload PDF
+ │
+ ▼
+FastAPI Backend
+ │
+ ├── Parse PDF
+ ├── Extract text
+ ├── Detect language
+ ├── Process pages
+ ├── Create semantic chunks
+ ├── Generate embeddings
+ └── Store vectors in Qdrant
+ │
+ ▼
+Chat Screen
+ │
+ ▼
+User Question
+ │
+ ▼
+FastAPI RAG Pipeline
+ │
+ ▼
+Retrieved Evidence
+ │
+ ▼
+AI Answer
+ │
+ ▼
+Flutter Chat UI
+```
+
+---
+
+## Chat Screen
+
+The chat interface displays:
+
+* User messages
+* AI responses
+* Markdown content
+* Arabic and English text
+* Document page references
+* Loading states
+* Error states
+* Conversation history
+
+Page references are displayed using the physical PDF page associated with the retrieved evidence.
+
+Example:
+
+```text
+The Java programming language was designed to...
+[p. 17]
+```
+
+---
+
+## Page References
+
+The Flutter application includes page-reference parsing for citations generated by the backend.
+
+Supported format:
+
+```text
+[p. 17]
+```
+
+Page references can be converted into interactive UI elements.
+
+The page-reference system is designed to:
+
+* Detect page references
+* Support Arabic-Indic digits
+* Remove duplicate page references
+* Prevent displaying raw citation syntax
+* Display a user-friendly page-reference widget
+
+---
+
+## Arabic and English
+
+The application supports both Arabic and English content.
+
+The chat UI handles:
+
+```text
+Arabic
+English
+Mixed Arabic/English
+Arabic-Indic numbers
+```
+
+Arabic messages are displayed using appropriate text direction and layout handling.
+
+---
+
+## Web
+
+Run the application in Chrome:
+
+```powershell
+flutter run -d chrome
+```
+
+Build the production Web application:
+
+```powershell
+flutter build web --release
+```
+
+The generated Web application will be placed in:
+
+```text
+build/web/
+```
+
+The contents of `build/web/` can be deployed to a static hosting service such as GitHub Pages or another web host.
+
+---
+
+## Android
+
+Build a release APK:
+
+```powershell
+flutter build apk --release
+```
+
+The APK is generated under:
+
+```text
+build/app/outputs/flutter-apk/
+```
+
+Build an Android App Bundle for Google Play:
+
+```powershell
+flutter build appbundle --release
+```
+
+The resulting bundle can be found under:
+
+```text
+build/app/outputs/bundle/release/
+```
+
+---
+
+## Windows
+
+Run on Windows:
+
+```powershell
+flutter run -d windows
+```
+
+Build Windows release:
+
+```powershell
+flutter build windows --release
+```
+
+---
+
+## Linux
+
+Run:
+
+```powershell
+flutter run -d linux
+```
+
+Build:
+
+```powershell
+flutter build linux --release
+```
+
+---
+
+## macOS
+
+Run:
+
+```powershell
+flutter run -d macos
+```
+
+Build:
+
+```powershell
+flutter build macos --release
+```
+
+---
+
+## iOS
+
+On macOS with Xcode installed:
+
+```bash
+flutter run -d ios
+```
+
+Build:
+
+```bash
+flutter build ios --release
+```
+
+---
+
+## Testing
+
+Run Flutter tests:
+
+```powershell
+flutter test
+```
+
+Analyze the project:
+
+```powershell
+flutter analyze
+```
+
+Format Dart code:
+
+```powershell
+dart format .
+```
+
+---
+
+## Useful Flutter Commands
+
+Clean the project:
+
+```powershell
+flutter clean
+```
+
+Get dependencies:
+
+```powershell
+flutter pub get
+```
+
+Upgrade dependencies:
+
+```powershell
+flutter pub upgrade
+```
+
+Check outdated packages:
+
+```powershell
+flutter pub outdated
+```
+
+Check Flutter installation:
+
+```powershell
+flutter doctor -v
+```
+
+---
+
+## Environment Configuration
+
+Do not commit private API keys or secrets to GitHub.
+
+Environment-specific configuration should be kept outside source control when it contains sensitive information.
+
+Examples of sensitive information include:
+
+```text
+API keys
+Database passwords
+Service account credentials
+Private tokens
+Private certificates
+```
+
+---
+
+## Development Workflow
+
+Recommended workflow:
+
+```text
+1. Pull latest code
+        │
+        ▼
+2. flutter pub get
+        │
+        ▼
+3. Configure backend URL
+        │
+        ▼
+4. Start FastAPI backend
+        │
+        ▼
+5. Run Flutter application
+        │
+        ▼
+6. Test authentication
+        │
+        ▼
+7. Test PDF upload
+        │
+        ▼
+8. Test document questions
+        │
+        ▼
+9. Run flutter analyze
+        │
+        ▼
+10. Run flutter test
+```
+
+---
+
+## Repository Structure
+
+The complete project is organized as:
+
+```text
+chat-With-pdf/
+│
+├── Flutter/
+│   ├── lib/
+│   ├── android/
+│   ├── ios/
+│   ├── web/
+│   ├── windows/
+│   ├── linux/
+│   ├── macos/
+│   ├── test/
+│   ├── pubspec.yaml
+│   └── README.md
+│
+├── Backend/
+│   ├── app/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── requirements.txt
+│   └── README.md
+│
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Flutter ↔ Backend
+
+The Flutter application is the client layer.
+
+The FastAPI backend provides the AI/RAG functionality.
+
+```text
+                    Chat With PDF
+                         │
+             ┌───────────┴───────────┐
+             │                       │
+          Flutter                 FastAPI
+          Client                  Backend
+             │                       │
+             │ HTTP/REST             │
+             └───────────────────────┘
+                                     │
+                          ┌──────────┴──────────┐
+                          │                     │
+                       Qdrant                OpenAI
+```
+
+---
+
+## Related Documentation
+
+Backend documentation:
+
+```text
+../Backend/README.md
+```
+
+The backend README contains information about:
+
+* FastAPI
+* Docker
+* Qdrant
+* RAG architecture
+* PDF processing
+* Retrieval
+* Citations
+* Cloud Run deployment
+
+---
+
+## License
+
+Add the project's license information here when a license has been selected for the repository.
