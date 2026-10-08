@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pymupdf>=1.23.0  # find_tables() (table extraction) requires >=1.23
+openai
+python-multipart
+python-dotenv
+google-auth
+python-jose[cryptography]
+qdrant-client>=1.10.0  # 1.10+ required: app/vector/repository.py uses query_points(), not the removed .search()
+requests
+# Optional — only needed if RERANK_PROVIDER=cross_encoder (app/retrieval/reranker.py).
+# Not installed by default: CrossEncoderReranker falls back to the local
+# heuristic reranker if this isn't present, and it's a sizeable
+# torch-based install most deployments won't need.
+# sentence-transformers
